@@ -1,21 +1,24 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 
-class TestWidget extends StatelessWidget {
-  Widget build(context) {
-    return Text('hello');
-  }
-}
+import '../lib/evento.dart';
 
 void main() {
-  testWidgets('Should run the animation', (WidgetTester tester) async {
-    await tester.pumpWidget(Material(
-        child: Directionality(
-            textDirection: TextDirection.ltr, child: TestWidget())));
-    await tester.pump();
-
-    final text = find.text('value: 120.0');
-
-    expect(text, findsOneWidget);
+  test('subscribing to an event', () {
+    int counter = 2;
+    E.on('foo', (value) {
+      counter += value;
+    });
+    E.dispatch('foo', 8);
+    expect(counter, 10);
+  });
+  test('unsubscribing to an event', () {
+    int counter = 2;
+    Function handler = (value) {
+      counter += value;
+    };
+    E.on('foo', handler);
+    E.off('foo', handler);
+    E.dispatch('foo', 8);
+    expect(counter, 2);
   });
 }
