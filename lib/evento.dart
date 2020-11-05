@@ -1,4 +1,4 @@
-export './evento.dart';
+export './mixin.dart';
 
 class EEvent {
   String type;
