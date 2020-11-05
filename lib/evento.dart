@@ -1,17 +1,20 @@
-class Event {
+export './evento.dart';
+
+class EEvent {
   String type;
   var data;
-  Event({this.type, this.data});
+  EEvent({this.type, this.data});
 }
 
-class Evento {
+class Bus {
   var listeners = {};
 
-  void on(String type, Function listener) {
+  Function on(String type, Function listener) {
     if (listeners[type] == null) {
       listeners[type] = [];
     }
     listeners[type].add(listener);
+    return () => off(type, listener);
   }
 
   void off(String type, Function listener) {
@@ -24,7 +27,7 @@ class Evento {
 
   void dispatch(String type, [data]) {
     if (listeners[type] != null) {
-      listeners[type].forEach((l) => l(Event(type: type, data: data)));
+      listeners[type].forEach((l) => l(EEvent(type: type, data: data)));
     }
   }
 
@@ -33,4 +36,4 @@ class Evento {
   }
 }
 
-Evento E = Evento();
+Bus E = Bus();
