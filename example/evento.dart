@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../lib/evento.dart';
+import 'package:evento/evento.dart';
 
 class A extends StatelessWidget with EventoStatelessWidget {
   Widget build(context) {
