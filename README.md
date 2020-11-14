@@ -9,7 +9,11 @@ For the `StatelessWidget` the `EventoStatelessWidget` mixin only adds the `dispa
 * `dispatch(String type, [data])` - `type` is the name of the event and `data` is an optional payload.
 * `on(String type, Function listener)` - `type` is the name of the event and `listener` is a function that accepts object of type `EEvent`. It has `type` (again a string) and `data` which is the payload (if any) used in `dispatched`.
 
+Additionally the library offers a simple pub-sub implementation as a standalone class. No Flutter involved. Check out the example below.
+
 ## Example 
+
+Using with Flutter.
 
 ```dart
 import 'package:evento/evento.dart';
@@ -40,4 +44,26 @@ class _B extends State<B> with Evento {
     return Text(value);
   }
 }
+```
+
+Using standalone:
+
+```dart
+EventoChannel ch = new EventoChannel();
+Function listener = (message) {
+  print(message); // "Hello world"
+};
+Function remove = ch.addListener(listener);
+ch.notify("Hello world");
+
+// There are two ways to remove a listener.
+// - calling the `removeListener` method of the channel
+// - calling the function returned by the `addListener` method of the channel
+remove(); // or ch.removeListener(listener)
+
+// Stopping the channel to call listeners and accept new listeners.
+ch.close();
+
+// Removing all the added listeners so far.
+ch.reset();
 ```

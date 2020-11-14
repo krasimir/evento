@@ -101,4 +101,57 @@ void main() {
     )));
     expect(E.listeners['foo'].length, 0);
   });
+  test('Creating channel, add listener and notify', () {
+    int value = 0;
+    EventoChannel c = new EventoChannel();
+    c.addListener((n) {
+      value += n;
+    });
+    c.notify(4);
+    c.notify(6);
+    expect(value, 10);
+  });
+  test('Removing a listener', () {
+    int value = 0;
+    EventoChannel c = new EventoChannel();
+    Function l1 = () {
+      value += 10;
+    };
+    Function l2 = () {
+      value += 12;
+    };
+    c.addListener(l1);
+    Function remove = c.addListener(l2);
+    c.notify();
+    c.removeListener(l1);
+    remove();
+    c.notify();
+    expect(value, 22);
+  });
+  test('Reset a channel', () {
+    int value = 0;
+    EventoChannel c = new EventoChannel();
+    Function listener = () {
+      value += 10;
+    };
+    c.addListener(listener);
+    c.notify();
+    c.notify();
+    c.reset();
+    c.notify();
+    expect(value, 20);
+  });
+  test('Close a channel', () {
+    int value = 0;
+    EventoChannel c = new EventoChannel();
+    Function listener = () {
+      value += 10;
+    };
+    c.addListener(listener);
+    c.notify();
+    c.close();
+    c.notify();
+    c.notify();
+    expect(value, 10);
+  });
 }

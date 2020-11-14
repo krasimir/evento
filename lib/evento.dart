@@ -1,4 +1,5 @@
 export './mixin.dart';
+export './channel.dart';
 
 class EEvent {
   String type;
