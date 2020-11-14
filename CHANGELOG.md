@@ -1,3 +1,5 @@
+## [1.1.1] - Removing useless print
+
 ## [1.1.0] - Adding EventoChannel class.
 
 ## [1.0.2] - Updating the README.

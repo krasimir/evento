@@ -5,7 +5,6 @@ mixin Evento<T extends StatefulWidget> on State<T> {
   List<Function> cleanups = [];
   @override
   dispose() {
-    print('dispose in mixin (EventoState) ${cleanups.length}');
     cleanups.forEach((callback) => callback());
     super.dispose();
   }
